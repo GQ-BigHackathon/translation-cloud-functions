@@ -2,5 +2,11 @@
   "regions": ["lhr1"],
   "public": false,
   "cleanUrls": true,
-  "rewrites": [{ "source": "/", "destination": "/api/hello-world" }]
+  "rewrites": [
+    { "source": "/", "destination": "/api/hello-world" },
+    {
+      "source": "/translate",
+      "destination": "/api/integrations/azure/translate"
+    }
+  ]
 }

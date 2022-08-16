@@ -1,0 +1,6 @@
+{
+	"extends": "../../../../../../../tsconfig.json",
+	"include": [
+		"../../../../../../../api/integrations/azure/translate.ts"
+	]
+}
