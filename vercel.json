@@ -2,5 +2,5 @@
   "regions": ["lhr1"],
   "public": false,
   "cleanUrls": true,
-  "rewrites": [{ "source": "/", "destination": "/api/hello-world.ts" }]
+  "rewrites": [{ "source": "/", "destination": "/api/hello-world" }]
 }
