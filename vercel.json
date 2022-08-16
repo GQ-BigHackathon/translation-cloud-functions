@@ -1,8 +1,6 @@
 {
-  "routes": [
-    {
-      "src": "/",
-      "dest": "/api/hello-world.ts"
-    }
-  ]
+  "regions": ["lhr1"],
+  "public": false,
+  "cleanUrls": true,
+  "rewrites": [{ "source": "/", "destination": "/api/hello-world.ts" }]
 }
