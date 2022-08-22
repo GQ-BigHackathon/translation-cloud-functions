@@ -37,13 +37,13 @@ export const http = (
       return;
     }
 
-    const hostnameFind = await Store.findOne({
-      hostname: req.headers.origin,
-    });
-    if (!hostnameFind) {
-      res.status(400).send('Not allowed');
-      return;
-    }
+    // const hostnameFind = await Store.findOne({
+    //   hostname: req.headers.origin,
+    // });
+    // if (!hostnameFind) {
+    //   res.status(400).send('Not allowed');
+    //   return;
+    // }
     await handler(req, res);
   };
 };
