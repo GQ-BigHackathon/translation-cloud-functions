@@ -19,9 +19,20 @@ export const http = (
       'Access-Control-Allow-Methods',
       methods.map((method) => method.toUpperCase()).join(','),
     );
-    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-    res.setHeader('Access-Control-Allow-Credentials', 'true');
-    res.setHeader('Access-Control-Max-Age', '86400');
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader(
+      'Access-Control-Allow-Methods',
+      methods.map((method) => method.toLocaleUpperCase()).join(','),
+    );
+    res.setHeader(
+      'Access-Control-Allow-Headers',
+      'Origin, Content-Type, Accept, Content',
+    );
+    res.setHeader('Access-Control-Max-Age', '3600');
+    if (req.method!.toLocaleUpperCase() === 'OPTIONS') {
+      res.status(200).send('');
+      return;
+    }
 
     if (
       !methods
