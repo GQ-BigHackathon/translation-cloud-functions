@@ -10,10 +10,10 @@ const translateFn = http(['POST'], async (req, res) => {
     const { from, to, translate } = body;
 
     // If translate.ids are not unique, the API will return an error.
-    const ids = translate.map(({ id }) => id);
-    if (ids.length !== new Set(ids).size) {
-      throw new Error('Duplicate ids');
-    }
+    // const ids = translate.map(({ id }) => id);
+    // if (ids.length !== new Set(ids).size) {
+    //   throw new Error('Duplicate ids');
+    // }
 
     // if to is not specified, the API will return an error.
     if (!to) throw new Error('To is not specified');
