@@ -26,7 +26,7 @@ export const http = (
     );
     res.setHeader(
       'Access-Control-Allow-Headers',
-      'Origin, Content-Type, Accept, Content',
+      'Origin, Content-Type, Accept, Content, StoreHash',
     );
     res.setHeader('Access-Control-Max-Age', '3600');
     if (req.method!.toLocaleUpperCase() === 'OPTIONS') {
