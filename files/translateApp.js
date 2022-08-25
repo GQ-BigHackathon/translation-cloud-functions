@@ -155,6 +155,7 @@
       return;
     }
     storeData('translationsEnabled', true);
+    translatePageBody();
   };
 
   // onSelection from the dropdown menu.
@@ -227,6 +228,16 @@
 
   //store the default language
   storeData('defaultLanguage', defaultLanguage);
+
+  // Check the url for a translation language.
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.has('lang')) {
+    const lang = urlParams.get('lang');
+    const language = languagesEnabled.find((l) => l.code === lang);
+    if (language) {
+      onSelectTranslation(language);
+    }
+  }
 
   // Import the flag library
   const head = document.getElementsByTagName('head')[0];
