@@ -13,8 +13,8 @@
       "destination": "/api/integrations/bigcommerce/storeLanguages"
     },
     {
-      "source": "/store/translateFn",
-      "destination": "/api/integrations/bigcommerce/translateFn"
+      "source": "/store/translateApp.js",
+      "destination": "/api/integrations/bigcommerce/translateApp"
     }
   ]
 }
