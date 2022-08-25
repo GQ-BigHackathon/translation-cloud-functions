@@ -6,6 +6,7 @@ const storeSchema = new mongoose.Schema(
     hash: { type: String, required: true },
     status: { type: String, required: true },
     languagesEnabled: { type: Array, required: true },
+    defaultLanguage: { type: Object, required: true },
   },
   {
     timestamps: true,

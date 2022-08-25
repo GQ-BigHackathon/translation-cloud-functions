@@ -16,8 +16,9 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       }
 
       const languagesEnabled = storeData.languagesEnabled;
-
+      const defaultLanguage = storeData.defaultLanguage;
       const response = {
+        defaultLanguage,
         languagesEnabled,
         meta: {
           status: 'success',
