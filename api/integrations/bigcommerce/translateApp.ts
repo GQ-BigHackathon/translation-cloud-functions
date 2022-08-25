@@ -7,6 +7,7 @@ import Store from '../../../models/store';
 mongooseConnect();
 
 const translateFn = http(['GET'], async (req, res) => {
+  console.log('req.headers', req.headers);
   const storeData = await Store.findOne({
     hostname: req.headers.origin,
   });
