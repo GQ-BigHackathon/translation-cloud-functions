@@ -94,7 +94,7 @@
   head.appendChild(cssLink);
 
   // Grab the nav bar
-  const navUserSection = document.querySelector('ul.navUser-section');
+  const navUserSection = document.querySelector('ul.navUser-section--alt');
 
   // Create a nav bar item to stick everything inside
   const navUserItem = document.createElement('li');
