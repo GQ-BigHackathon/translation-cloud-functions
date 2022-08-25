@@ -19,14 +19,10 @@ export const http = (
       'Access-Control-Allow-Methods',
       methods.map((method) => method.toUpperCase()).join(','),
     );
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader(
-      'Access-Control-Allow-Methods',
-      methods.map((method) => method.toLocaleUpperCase()).join(','),
-    );
+
     res.setHeader(
       'Access-Control-Allow-Headers',
-      'Origin, Content-Type, Accept, Content, StoreHash',
+      'Origin, Content-Type, Accept, Content, StoreHash, Referer',
     );
     res.setHeader('Access-Control-Max-Age', '3600');
     if (req.method!.toLocaleUpperCase() === 'OPTIONS') {
