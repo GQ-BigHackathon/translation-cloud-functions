@@ -152,12 +152,12 @@
   const enableTranslationsCheck = (defaultLanguage, translationLanguage) => {
     if (defaultLanguage.code === translationLanguage.code) {
       storeData('translationsEnabled', false);
-      window.location.reload();
       return;
     }
     storeData('translationsEnabled', true);
+
+    // If the previous language is not the default language
     //refresh the page so its back to default language
-    window.location.reload();
   };
 
   // onSelection from the dropdown menu.
@@ -238,6 +238,7 @@
   select.style.textTransform = 'capitalize';
   select.classList.add('select');
   select.onchange = (e) => {
+    console.log('e', e);
     onSelectTranslation({
       name: Array.from(e.target.childNodes).find(
         (f) => f.value === e.target.value,
