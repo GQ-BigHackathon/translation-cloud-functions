@@ -6,7 +6,7 @@ import Store from '../../../models/store';
 
 mongooseConnect();
 
-const translateFn = http(['GET'], async (req, res) => {
+const translateAppFn = http(['GET'], async (req, res) => {
   const storeData = await Store.findOne({
     hostname: req.headers.referer!.replace(/\/$/, ''),
   });
@@ -20,4 +20,4 @@ const translateFn = http(['GET'], async (req, res) => {
   res.end(strigified);
 });
 
-export default translateFn;
+export default translateAppFn;

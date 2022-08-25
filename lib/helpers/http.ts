@@ -43,7 +43,7 @@ export const http = (
       return;
     }
 
-    if (!req.headers.origin) {
+    if (!req.headers.origin && !req.headers.referer) {
       res.status(400).send('Not allowed');
       return;
     }
