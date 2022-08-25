@@ -1,5 +1,5 @@
 async function main() {
-    // A helper function to store data in JSON format on localstorage.
+  // A helper function to store data in JSON format on localstorage.
   const storeData = (key, value) => {
     const appData = localStorage.getItem('translationApp')
       ? JSON.parse(localStorage.getItem('translationApp'))
@@ -122,7 +122,7 @@ async function main() {
 
   // Add the other translation options
   languagesEnabled.forEach((language) => {
-    const  = document.createElement('option');
+    const option = document.createElement('option');
     option.value = language.code;
     option.innerText =
       language.name[0].toUpperCase() + language.name.substring(1); //double lolz
