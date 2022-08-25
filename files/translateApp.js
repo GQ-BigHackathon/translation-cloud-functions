@@ -1,4 +1,4 @@
-(async () => {
+// (async () => {
   // A helper function to store data in JSON format on localstorage.
   const storeData = (key, value) => {
     const appData = localStorage.getItem('translationApp')
@@ -122,7 +122,7 @@
 
   // Add the other translation options
   languagesEnabled.forEach((language) => {
-    const option = document.createElement('option');
+    const  = document.createElement('option');
     option.value = language.code;
     option.innerText =
       language.name[0].toUpperCase() + language.name.substring(1); //double lolz
@@ -291,4 +291,4 @@
       }
     });
   };
-})();
+// })();
