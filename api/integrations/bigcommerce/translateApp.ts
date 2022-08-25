@@ -7,9 +7,8 @@ import Store from '../../../models/store';
 mongooseConnect();
 
 const translateFn = http(['GET'], async (req, res) => {
-  console.log('req.headers', req.headers);
   const storeData = await Store.findOne({
-    hostname: req.headers.origin,
+    hostname: req.headers.referer!.replace(/\/$/, ''),
   });
   if (!storeData) {
     res.status(400).send('Not allowed');
