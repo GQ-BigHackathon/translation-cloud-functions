@@ -155,13 +155,19 @@
       return;
     }
     storeData('translationsEnabled', true);
-
-    // If the previous language is not the default language
-    //refresh the page so its back to default language
   };
 
   // onSelection from the dropdown menu.
   const onSelectTranslation = (translation) => {
+    const oldLanguage = getData('translationLanguage');
+    let willRefresh = false;
+
+    if (translation.code === getData('defaultLanguage').code)
+      willRefresh = true; // Reset so we have the base language again.
+
+    if (oldLanguage.code !== getData('defaultLanguage').code)
+      willRefresh = true; // We want to translate the base language to the new language.
+
     //save the translation to localStorage
     storeData('translationLanguage', translation);
     //set the flag to the country code
@@ -180,6 +186,10 @@
       `fi-${languageCodeToCountryCode(translation.code)}`,
     );
     enableTranslationsCheck(getData('defaultLanguage'), translation);
+    if (willRefresh) {
+      window.location.reload();
+      return;
+    }
   };
 
   //Get the list of translations enabled for the store
@@ -238,7 +248,6 @@
   select.style.textTransform = 'capitalize';
   select.classList.add('select');
   select.onchange = (e) => {
-    console.log('e', e);
     onSelectTranslation({
       name: Array.from(e.target.childNodes).find(
         (f) => f.value === e.target.value,
