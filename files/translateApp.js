@@ -1,4 +1,4 @@
-// (async () => {
+(async () => {
   // A helper function to store data in JSON format on localstorage.
   const storeData = (key, value) => {
     const appData = localStorage.getItem('translationApp')
@@ -291,4 +291,4 @@
       }
     });
   };
-// })();
+})();
