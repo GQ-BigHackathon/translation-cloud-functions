@@ -126,7 +126,8 @@ async function main() {
     option.value = language.code;
     option.innerText =
       language.name[0].toUpperCase() + language.name.substring(1); //double lolz
-    option.selected = language.code === getData('translationLanguage').code;
+    option.selected =
+      language.code === getData('translationLanguage').code || false;
     select.appendChild(option);
   });
 
