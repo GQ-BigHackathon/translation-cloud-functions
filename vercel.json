@@ -7,6 +7,10 @@
     {
       "source": "/translate",
       "destination": "/api/integrations/azure/translate"
+    },
+    {
+      "source": "/store/languages",
+      "destination": "/api/integrations/bigcommerce/storeLanguages"
     }
   ]
 }
