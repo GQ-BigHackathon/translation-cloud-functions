@@ -161,6 +161,9 @@
   // onSelection from the dropdown menu.
   const onSelectTranslation = (translation) => {
     const oldLanguage = getData('translationLanguage');
+
+    if (oldLanguage.code === translation.code) return; // Nothing to do here.
+
     let willRefresh = false;
 
     if (translation.code === getData('defaultLanguage').code)
