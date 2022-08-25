@@ -11,6 +11,10 @@
     {
       "source": "/store/languages",
       "destination": "/api/integrations/bigcommerce/storeLanguages"
+    },
+    {
+      "source": "/store/translateFn.js",
+      "destination": "/api/integrations/bigcommerce/translateFn"
     }
   ]
 }

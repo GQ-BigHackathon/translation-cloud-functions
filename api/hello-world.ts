@@ -1,6 +1,6 @@
 import { http } from '../lib/helpers/http';
 
-const helloWorld = http(['POST'], async (req, res) => {
+const helloWorld = http(['POST', 'GET'], async (req, res) => {
   res.json({ message: 'Hello World!' });
   return;
 });
