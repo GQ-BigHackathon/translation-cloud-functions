@@ -152,6 +152,7 @@
   const enableTranslationsCheck = (defaultLanguage, translationLanguage) => {
     if (defaultLanguage.code === translationLanguage.code) {
       storeData('translationsEnabled', false);
+      window.location.reload();
       return;
     }
     storeData('translationsEnabled', true);
