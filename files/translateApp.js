@@ -91,7 +91,7 @@
         Array.from(elementsFromXPath(path)).find(
           (e) => e.innerHTML === innerHtml,
         ) ||
-        Array.from($x(path)).find(
+        Array.from(elementsFromXPath(path)).find(
           (e) =>
             e.innerText.toLowerCase() ===
             innerHtml.replace(/\n/g, '').trim().toLowerCase(),
