@@ -39,7 +39,7 @@ export const http = (
       return;
     }
 
-    if (!req.headers.origin && !req.headers.referer) {
+    if (!req.headers.origin && !req.headers.referer && !req.headers.StoreHash) {
       res.status(400).send('Not allowed');
       return;
     }
