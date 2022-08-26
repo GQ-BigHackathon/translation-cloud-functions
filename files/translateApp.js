@@ -160,9 +160,9 @@
 
   // onSelection from the dropdown menu.
   const onSelectTranslation = (translation) => {
-    const oldLanguage = getData('translationLanguage');
+    const oldLanguage = getData('translationLanguage') || {};
 
-    if (oldLanguage && oldLanguage.code === translation.code) return; // Nothing to do here.
+    if (oldLanguage.code === translation.code) return; // Nothing to do here.
 
     let willRefresh = false;
 
