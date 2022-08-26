@@ -30,6 +30,19 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       };
       res.status(200).json(response);
     }
+    if (req.method === 'POST') {
+      Store.updateOne(
+        {
+          hash: req.headers.storehash,
+        },
+        {
+          languagesEnabled: req.body.languagesEnabled,
+          defaultLanguage: req.body.defaultLanguage,
+        },
+      );
+
+      res.status(200).json({ response: 'success' });
+    }
   } catch (error: any) {
     console.error('error', error);
     res.status(500).send({ Error: error.message });
