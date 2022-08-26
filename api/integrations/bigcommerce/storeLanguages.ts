@@ -31,7 +31,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       res.status(200).json(response);
     }
     if (req.method === 'POST') {
-      Store.updateOne(
+      const response = Store.updateOne(
         {
           hash: req.headers.storehash,
         },
@@ -40,6 +40,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
           defaultLanguage: req.body.defaultLanguage,
         },
       );
+      console.log('response', response);
 
       res.status(200).json({ response: 'success' });
     }
