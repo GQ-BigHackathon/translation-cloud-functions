@@ -176,7 +176,7 @@
     storeData('translationLanguage', translation);
     //set the flag to the country code
     const translationFlagBtn = document
-      .querySelector('#translation-button')
+      .querySelector('.navUser-action--currencySelector')
       .querySelector('span');
 
     //remove any classes that start with fi-
@@ -298,6 +298,7 @@
     ? getData('translationLanguage').code
     : defaultLanguage.code;
 
+  //here
   button.innerHTML = `Language <span class="fi fi-${languageCodeToCountryCode(
     defaultFlagCode,
   )}"></span>`;
