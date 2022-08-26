@@ -40,10 +40,11 @@ export const http = (
     }
 
     console.log('req.headers', req.headers);
-    if (!req.headers.origin || !req.headers.referer || !req.headers.StoreHash) {
+    if (!req.headers.origin || !req.headers.referer || !req.headers.storehash) {
       res.status(400).send('Not allowed');
       return;
     }
+    console.log('passed');
 
     // const hostnameFind = await Store.findOne({
     //   hostname: req.headers.origin,
