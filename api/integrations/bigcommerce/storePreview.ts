@@ -2,8 +2,7 @@ import { http } from '../../../lib/helpers/http';
 import axios from 'axios';
 
 const storePreview = http(['POST'], async (req, res) => {
-  const { url } = req.body;
-  console.log('req.body', req.body);
+  const { url } = JSON.parse(req.body);
   if (!url) {
     res.status(400).send('No url specified');
     return;
