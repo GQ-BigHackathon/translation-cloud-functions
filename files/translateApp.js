@@ -176,7 +176,7 @@
     storeData('translationLanguage', translation);
     //set the flag to the country code
     const translationFlagBtn = document
-      .querySelector('.navUser-action--languageSelector')
+      .querySelector('.navUser-action--translationSelector')
       .querySelector('span');
 
     //remove any classes that start with fi-
@@ -285,7 +285,8 @@
   const button = document.createElement('a');
   [
     'navUser-action',
-    'navUser-action--languageSelector',
+    'navUser-action--translationSelector',
+    'navUser-action--currencySelector',
     'has-dropdown',
   ].forEach((className) => button.classList.add(className));
 
