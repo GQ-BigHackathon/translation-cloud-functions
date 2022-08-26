@@ -162,7 +162,7 @@
   const onSelectTranslation = (translation) => {
     const oldLanguage = getData('translationLanguage');
 
-    if (oldLanguage.code === translation.code) return; // Nothing to do here.
+    if (oldLanguage && oldLanguage.code === translation.code) return; // Nothing to do here.
 
     let willRefresh = false;
 
