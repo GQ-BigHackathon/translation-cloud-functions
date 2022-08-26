@@ -15,6 +15,10 @@
     {
       "source": "/store/translateApp.js",
       "destination": "/api/integrations/bigcommerce/translateApp"
+    },
+    {
+      "source": "/store/preview",
+      "destination": "/api/integrations/bigcommerce/storePreview"
     }
   ]
 }
