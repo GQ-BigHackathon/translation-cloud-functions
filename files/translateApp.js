@@ -246,50 +246,59 @@
   // Create a nav bar item to stick everything inside
   const navUserItem = document.createElement('li');
   navUserItem.classList.add('navUser-item');
-  // create a select drop down
-  const select = document.createElement('select');
-  select.id = 'translation-select';
-  select.style.textTransform = 'capitalize';
-  select.classList.add('select');
-  select.onchange = (e) => {
-    onSelectTranslation({
-      name: Array.from(e.target.childNodes).find(
-        (f) => f.value === e.target.value,
-      ).innerText,
-      code: e.target.value,
-    });
-  };
 
-  // First option should be the default
-  const option = document.createElement('option');
-  option.value = defaultLanguage.code;
-  option.innerText =
-    defaultLanguage.name[0].toUpperCase() + defaultLanguage.name.substring(1); //lolz;
-  select.appendChild(option);
+  const translationSelection = document.createElement('ul');
+  translationSelection.id = 'translationSelection';
+  translationSelection.classList.add('dropdown-menu');
+  translationSelection.setAttribute('data-dropdown', 'translationSelection');
+  translationSelection.setAttribute('aria-hidden', 'true');
+  translationSelection.tabIndex = '-1';
+  translationSelection.style.position = 'absolute';
+  translationSelection.style.left = '-9999px';
+  translationSelection.style.top = '49px';
 
-  // Add the other translation options
-  languagesEnabled.forEach((language) => {
-    const option = document.createElement('option');
-    option.value = language.code;
-    option.innerText =
-      language.name[0].toUpperCase() + language.name.substring(1); //double lolz
-
-    option.selected = getData('translationLanguage')
-      ? language.code === getData('translationLanguage').code
-      : false;
-    select.appendChild(option);
+  //concat defaultLanguage and languagesEnabled
+  [defaultLanguage, ...languagesEnabled].forEach((language) => {
+    const li = document.createElement('li');
+    li.classList.add('dropdown-menu-item');
+    li.setAttribute('data-value', language.code);
+    li.innerHTML = `
+      <a href="#" class="dropdown-menu-item-link" data-language-code="${
+        language.code
+      }">
+        <span class="fi fi-${languageCodeToCountryCode(language.code)}"></span>
+        <strong>
+          ${language.name[0].toUpperCase() + language.name.substring(1)}
+        </strong>
+      </a>
+      `;
+    li.onclick = () => {
+      onSelectTranslation({
+        name: language.name,
+        code: language.code,
+      });
+    };
+    translationSelection.appendChild(li);
   });
 
   // Create a button to show the flag
-  const button = document.createElement('button');
-  button.classList.add('navUser-button');
-  button.id = 'translation-button';
+  const button = document.createElement('a');
+  [
+    'navUser-action',
+    'navUser-action--currencySelector',
+    'has-dropdown',
+  ].forEach((className) => button.classList.add(className));
+
+  button.href = '#';
+  button.setAttribute('data-dropdown', 'translationSelection');
+  button.setAttribute('aria-controls', 'translationSelection');
+  button.setAttribute('aria-expanded', 'false');
 
   const defaultFlagCode = getData('translationLanguage')
     ? getData('translationLanguage').code
     : defaultLanguage.code;
 
-  button.innerHTML = `<span class="fi fi-${languageCodeToCountryCode(
+  button.innerHTML = `Language <span class="fi fi-${languageCodeToCountryCode(
     defaultFlagCode,
   )}"></span>`;
   button.style.padding = '1rem .78571rem';
@@ -300,9 +309,10 @@
 
   // Lets put it all together
   translationDiv.appendChild(button);
-  translationDiv.appendChild(select);
+  // translationDiv.appendChild(select);
 
-  navUserItem.appendChild(translationDiv);
+  navUserItem.appendChild(button);
+  navUserItem.appendChild(translationSelection);
 
   navUserSection.insertBefore(navUserItem, navUserSection.firstChild);
 
