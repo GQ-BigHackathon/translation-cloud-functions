@@ -12,7 +12,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
           hostname: req.headers.origin,
         })) ||
         (await Store.findOne({
-          hash: req.headers.StoreHash,
+          hash: req.headers.storehash,
         }));
       if (!storeData) {
         res.status(400).send('Not allowed');
