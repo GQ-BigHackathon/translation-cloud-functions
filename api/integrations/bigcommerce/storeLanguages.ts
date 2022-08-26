@@ -7,9 +7,13 @@ mongooseConnect();
 const storeLanguages = http(['POST', 'GET'], async (req, res) => {
   try {
     if (req.method === 'GET') {
-      const storeData = await Store.findOne({
-        hostname: req.headers.origin,
-      });
+      const storeData =
+        (await Store.findOne({
+          hostname: req.headers.origin,
+        })) ||
+        (await Store.findOne({
+          storeHash: req.headers.storeHash,
+        }));
       if (!storeData) {
         res.status(400).send('Not allowed');
         return;
