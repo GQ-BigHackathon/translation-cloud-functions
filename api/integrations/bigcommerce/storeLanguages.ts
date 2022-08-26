@@ -31,6 +31,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       res.status(200).json(response);
     }
     if (req.method === 'POST') {
+      console.log('req.body', req.body);
       const response = Store.updateOne(
         {
           hash: req.headers.storehash,
