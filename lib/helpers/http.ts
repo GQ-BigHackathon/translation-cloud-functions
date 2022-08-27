@@ -82,6 +82,7 @@ export const http = (
         return;
       } else {
         const storeData = storeRef.data();
+        console.log('storeData', storeData);
         if (req.method!.toLocaleUpperCase() !== 'GET') {
           req.body.storeData = storeData;
         }
