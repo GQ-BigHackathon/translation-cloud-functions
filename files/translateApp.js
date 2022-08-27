@@ -107,7 +107,7 @@
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            StoreHash: '{{settings.store_hash}}',
+            storehash: document.translationApp.storehash,
           },
           body: JSON.stringify(translations),
         },
@@ -204,7 +204,7 @@
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
-          StoreHash: '{{settings.store_hash}}',
+          storehash: document.translationApp.storehash,
         },
       },
     ).then((res) => res.json());

@@ -1,26 +1,24 @@
 import { http } from '../../../lib/helpers/http';
-import { mongooseConnect } from '../../../config';
-import Store from '../../../models/store';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, updateDoc, getDoc } from 'firebase/firestore';
 
-mongooseConnect();
+const app = initializeApp({
+  apiKey: process.env.FIRE_API_KEY as string,
+  authDomain: process.env.FIRE_DOMAIN as string,
+  projectId: process.env.FIRE_PROJECT_ID as string,
+});
+const db = getFirestore(app);
 
 const storeLanguages = http(['POST', 'GET'], async (req, res) => {
   try {
     if (req.method === 'GET') {
-      const storeData =
-        (await Store.findOne({
-          hostname: req.headers.origin,
-        })) ||
-        (await Store.findOne({
-          hash: req.headers.storehash,
-        }));
-      if (!storeData) {
-        res.status(400).send('Not allowed');
-        return;
-      }
+      const storeData = req.body.storeData;
 
-      const languagesEnabled = storeData.languagesEnabled;
-      const defaultLanguage = storeData.defaultLanguage;
+      const languagesEnabled = storeData.languagesEnabled || [];
+      const defaultLanguage = storeData.defaultLanguage || {
+        code: 'en',
+        name: 'english',
+      };
       const response = {
         defaultLanguage,
         languagesEnabled,
@@ -31,22 +29,21 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       res.status(200).json(response);
     }
     if (req.method === 'POST') {
-      const response = await Store.updateOne(
-        {
-          hash: req.headers.storehash,
-        },
-        {
-          languagesEnabled: req.body.languagesEnabled,
-          defaultLanguage: req.body.defaultLanguage,
-        },
-      );
-      console.log('response', JSON.stringify(response));
+      const {
+        languagesEnabled,
+        defaultLanguage,
+      }: { languagesEnabled: []; defaultLanguage: {} } = JSON.parse(req.body);
 
-      res.status(200).json({ response: 'success' });
+      const storehash = req.headers.storehash as string;
+
+      const ref = doc(db, 'store', storehash);
+      await updateDoc(ref, { languagesEnabled, defaultLanguage });
+
+      res.status(200).json({ meta: { status: 'success' } });
     }
   } catch (error: any) {
     console.error('error', error);
-    res.status(500).send({ Error: error.message });
+    res.status(500).json({ meta: { status: 'error' } });
     return;
   }
 });

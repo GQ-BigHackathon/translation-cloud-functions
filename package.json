@@ -23,7 +23,7 @@
     "@vercel/node": "^2.5.8",
     "axios": "^0.27.2",
     "dotenv": "^16.0.1",
-    "mongoose": "^6.5.2",
+    "firebase": "^9.6.11",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

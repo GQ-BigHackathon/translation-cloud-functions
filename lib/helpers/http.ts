@@ -1,8 +1,15 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import dotenv from 'dotenv';
+dotenv.config();
 
-import Store from '../../models/store';
-import { mongooseConnect } from '../../config';
-mongooseConnect();
+const app = initializeApp({
+  apiKey: process.env.FIRE_API_KEY as string,
+  authDomain: process.env.FIRE_DOMAIN as string,
+  projectId: process.env.FIRE_PROJECT_ID as string,
+});
+const db = getFirestore(app);
 
 export const http = (
   allowedMethods: string[],
@@ -35,24 +42,33 @@ export const http = (
         .map((method) => method.toUpperCase())
         .includes(req.method!.toUpperCase())
     ) {
-      res.status(400).send('Method not allowed');
+      res
+        .status(400)
+        .json({ meta: { status: 'error', message: 'Method not allowed' } });
       return;
     }
 
-    console.log('req.headers', req.headers);
-    if (!req.headers.origin && !req.headers.referer && !req.headers.storehash) {
-      res.status(400).send('Not allowed');
+    const storehash = req.headers.storehash as string;
+    if (!storehash) {
+      res
+        .status(400)
+        .json({ meta: { status: 'error', message: 'StoreHash required' } });
       return;
     }
-    console.log('passed');
 
-    // const hostnameFind = await Store.findOne({
-    //   hostname: req.headers.origin,
-    // });
-    // if (!hostnameFind) {
-    //   res.status(400).send('Not allowed');
-    //   return;
-    // }
+    const ref = doc(db, 'store', storehash);
+    const storeRef = await getDoc(ref);
+
+    if (!storeRef.exists) {
+      res
+        .status(400)
+        .json({ meta: { status: 'error', message: 'StoreHash not found' } });
+      return;
+    }
+
+    const storeData = storeRef.data();
+    req.body.storeData = storeData;
+
     await handler(req, res);
   };
 };

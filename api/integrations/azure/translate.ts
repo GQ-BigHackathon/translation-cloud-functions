@@ -9,12 +9,6 @@ const translateFn = http(['POST'], async (req, res) => {
     if (!body) throw new Error('No body specified');
     const { from, to, translate } = body;
 
-    // If translate.ids are not unique, the API will return an error.
-    // const ids = translate.map(({ id }) => id);
-    // if (ids.length !== new Set(ids).size) {
-    //   throw new Error('Duplicate ids');
-    // }
-
     // if to is not specified, the API will return an error.
     if (!to) throw new Error('To is not specified');
 
@@ -42,8 +36,6 @@ const translateFn = http(['POST'], async (req, res) => {
       };
     });
 
-    console.log(translationsResBody.data);
-
     const response = {
       translations: translationsResBody,
       meta: {
@@ -58,7 +50,7 @@ const translateFn = http(['POST'], async (req, res) => {
     return;
   } catch (error: any) {
     console.error('error', error);
-    res.status(500).send({ Error: error.message });
+    res.status(500).send({ meta: { status: 'error' } });
     return;
   }
 });

@@ -1,5 +1,6 @@
 import AzureTranslate from './lib/azure/translate';
-import mongoose from 'mongoose';
+import { initializeApp } from 'firebase/app';
+import { getFirestore } from 'firebase/firestore';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -9,11 +10,12 @@ export const azureTranslate = new AzureTranslate(
   process.env.AZURE_TRANSLATE_REGION as string,
 );
 
-export const mongooseConnect = () => {
-  const connect = () =>
-    mongoose.connect(
-      `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}?retryWrites=true&w=majority`,
-    );
-  connect();
-  mongoose.connection.on('disconnected', connect);
+export const firebaseFirestore = () => {
+  const app = initializeApp({
+    apiKey: process.env.FIRE_API_KEY as string,
+    authDomain: process.env.FIRE_DOMAIN as string,
+    projectId: process.env.FIRE_PROJECT_ID as string,
+  });
+  const db = getFirestore(app);
+  return db;
 };
