@@ -57,7 +57,7 @@ export const http = (
     }
 
     // if no storehash or referer is provided, return error
-    if (!req.headers.storehash || !req.headers.referer) {
+    if (!req.headers.storehash && !req.headers.referer) {
       res.status(400).json({
         meta: {
           status: 'error',
