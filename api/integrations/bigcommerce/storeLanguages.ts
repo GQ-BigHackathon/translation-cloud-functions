@@ -11,7 +11,7 @@ const db = getFirestore(app);
 
 const storeLanguages = http(['POST', 'GET'], async (req, res) => {
   try {
-    if (req.method === 'GET') {
+    if (req.method?.toUpperCase() === 'GET') {
       const storehash = req.headers.storehash as string;
       console.log('storehash', storehash);
       const ref = doc(db, 'store', storehash);
@@ -40,7 +40,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       };
       res.status(200).json(response);
     }
-    if (req.method === 'POST') {
+    if (req.method?.toUpperCase() === 'POST') {
       const {
         languagesEnabled,
         defaultLanguage,
