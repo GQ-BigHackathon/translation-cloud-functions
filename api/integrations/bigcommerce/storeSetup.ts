@@ -14,7 +14,7 @@ const storeSetupFn = http(['POST'], async (req, res) => {
     const storeHash = req.headers.storehash as string;
     console.log('storeHash', storeHash);
     console.log('req.body', req.body);
-    const { storeSetupData } = JSON.parse(req.body);
+    const { storeSetupData } = req.body;
     console.log('storeSetupData', storeSetupData);
     if (!storeSetupData) {
       res.status(400).send('Not allowed');
