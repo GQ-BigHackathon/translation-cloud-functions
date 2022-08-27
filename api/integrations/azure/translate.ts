@@ -42,6 +42,8 @@ const translateFn = http(['POST'], async (req, res) => {
       };
     });
 
+    console.log(translationsResBody.data);
+
     const response = {
       translations: translationsResBody,
       meta: {
