@@ -13,8 +13,10 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
   try {
     if (req.method === 'GET') {
       const storehash = req.headers.storehash as string;
+      console.log('storehash', storehash);
       const ref = doc(db, 'store', storehash);
       const storeRef = await getDoc(ref);
+      console.log('storeRef', storeRef);
       if (!storeRef.exists) {
         res
           .status(400)
@@ -22,6 +24,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
         return;
       }
       const storeData = storeRef.data();
+      console.log('storeData', storeData);
 
       const languagesEnabled = storeData!.languagesEnabled || [];
       const defaultLanguage = storeData!.defaultLanguage || {
