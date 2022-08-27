@@ -99,11 +99,10 @@ export const http = (
           .json({ meta: { status: 'error', message: 'StoreHash not found' } });
         return;
       } else {
-        console.log('querySnapshot.docs', querySnapshot.docs.length);
         const storeData = querySnapshot.docs[0].data();
-        console.log('storeData', storeData);
-        console.log('storeData', storeData);
-        req.body.storeData = storeData;
+        if (req.method!.toLocaleUpperCase() !== 'GET') {
+          req.body.storeData = storeData;
+        }
       }
     }
 
