@@ -12,10 +12,19 @@ const db = getFirestore(app);
 const storeLanguages = http(['POST', 'GET'], async (req, res) => {
   try {
     if (req.method === 'GET') {
-      const storeData = req.body.storeData;
+      const storehash = req.headers.storehash as string;
+      const ref = doc(db, 'store', storehash);
+      const storeRef = await getDoc(ref);
+      if (!storeRef.exists) {
+        res
+          .status(400)
+          .json({ meta: { status: 'error', message: 'Store not found' } });
+        return;
+      }
+      const storeData = storeRef.data();
 
-      const languagesEnabled = storeData.languagesEnabled || [];
-      const defaultLanguage = storeData.defaultLanguage || {
+      const languagesEnabled = storeData!.languagesEnabled || [];
+      const defaultLanguage = storeData!.defaultLanguage || {
         code: 'en',
         name: 'english',
       };
