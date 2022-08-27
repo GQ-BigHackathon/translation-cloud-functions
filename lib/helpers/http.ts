@@ -84,12 +84,12 @@ export const http = (
         const storeData = storeRef.data();
         console.log('storeData', storeData);
         if (req.method!.toLocaleUpperCase() !== 'GET') {
-          console.log('req.body', req.body);
           req.body.storeData = storeData;
-          console.log('req.body', req.body);
         }
       }
     }
+
+    console.log('got here');
 
     if (req.headers.referer) {
       const referer = req.headers.referer as string;
