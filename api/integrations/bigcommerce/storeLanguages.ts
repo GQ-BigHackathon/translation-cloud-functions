@@ -44,7 +44,7 @@ const storeLanguages = http(['POST', 'GET'], async (req, res) => {
       const {
         languagesEnabled,
         defaultLanguage,
-      }: { languagesEnabled: []; defaultLanguage: {} } = JSON.parse(req.body);
+      }: { languagesEnabled: []; defaultLanguage: {} } = req.body;
 
       const storehash = req.headers.storehash as string;
 
