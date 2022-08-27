@@ -89,7 +89,7 @@ export const http = (
     if (req.headers.referer) {
       const referer = req.headers.referer as string;
       const hostname = referer.replace(/\/$/, '');
-      const storesRef = collection(db, 'stores');
+      const storesRef = collection(db, 'store');
       const q = query(storesRef, where('hostname', '==', hostname));
       const querySnapshot = await getDocs(q);
 
