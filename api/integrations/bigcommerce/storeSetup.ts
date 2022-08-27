@@ -12,18 +12,13 @@ const db = getFirestore(app);
 const storeSetupFn = http(['POST'], async (req, res) => {
   try {
     const storeHash = req.headers.storehash as string;
-    console.log('storeHash', storeHash);
-    console.log('req.body', req.body);
     const { storeSetupData } = req.body;
-    console.log('storeSetupData', storeSetupData);
     if (!storeSetupData) {
       res.status(400).send('Not allowed');
       return;
     }
 
     const { hostname, status } = storeSetupData;
-    console.log('status', status);
-    console.log('hostname', hostname);
     const ref = doc(db, 'store', storeHash);
     await updateDoc(ref, { hostname, status });
 

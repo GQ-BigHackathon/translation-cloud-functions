@@ -1,6 +1,14 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from 'firebase/firestore';
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -48,26 +56,53 @@ export const http = (
       return;
     }
 
-    const storehash = req.headers.storehash as string;
-    if (!storehash) {
-      res
-        .status(400)
-        .json({ meta: { status: 'error', message: 'StoreHash required' } });
+    // if no storehash or referer is provided, return error
+    if (!req.headers.storehash || !req.headers.referer) {
+      res.status(400).json({
+        meta: {
+          status: 'error',
+          message: 'StoreHash or Referer not provided',
+        },
+      });
       return;
     }
 
-    const ref = doc(db, 'store', storehash);
-    const storeRef = await getDoc(ref);
+    if (req.headers.storehash) {
+      const storehash = req.headers.storehash as string;
+      const ref = doc(db, 'store', storehash);
+      const storeRef = await getDoc(ref);
 
-    if (!storeRef.exists) {
-      res
-        .status(400)
-        .json({ meta: { status: 'error', message: 'StoreHash not found' } });
-      return;
+      if (!storeRef.exists()) {
+        res.status(400).json({
+          meta: {
+            status: 'error',
+            message: 'StoreHash not found',
+          },
+        });
+        return;
+      } else {
+        const storeData = storeRef.data();
+        req.body.storeData = storeData;
+      }
     }
 
-    const storeData = storeRef.data();
-    req.body.storeData = storeData;
+    if (req.headers.referer) {
+      const referer = req.headers.referer as string;
+      const hostname = referer.replace(/\/$/, '');
+      const storesRef = collection(db, 'stores');
+      const q = query(storesRef, where('hostname', '==', hostname));
+      const querySnapshot = await getDocs(q);
+
+      if (querySnapshot.empty) {
+        res
+          .status(400)
+          .json({ meta: { status: 'error', message: 'StoreHash not found' } });
+        return;
+      } else {
+        const storeData = querySnapshot.docs[0].data();
+        req.body.storeData = storeData;
+      }
+    }
 
     await handler(req, res);
   };
