@@ -20,7 +20,11 @@ const storeSetupFn = http(['POST'], async (req, res) => {
 
     const { hostname, status } = storeSetupData;
     const ref = doc(db, 'store', storeHash);
-    await updateDoc(ref, { hostname, status });
+    await updateDoc(ref, {
+      hostname,
+      status,
+      defaultLanguage: { code: 'en', name: 'english' },
+    });
 
     res
       .status(200)
