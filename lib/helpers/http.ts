@@ -67,6 +67,7 @@ export const http = (
       return;
     }
 
+    let passedWithStoreHash = false;
     if (req.headers.storehash) {
       const storehash = req.headers.storehash as string;
       const ref = doc(db, 'store', storehash);
@@ -86,12 +87,12 @@ export const http = (
         if (req.method!.toLocaleUpperCase() !== 'GET') {
           req.body.storeData = storeData;
         }
+        passedWithStoreHash = true;
       }
     }
 
-    console.log('got here');
-
-    if (req.headers.referer) {
+    let passedWithReferer = false;
+    if (!passedWithStoreHash && req.headers.referer) {
       const referer = req.headers.referer as string;
       const hostname = referer.replace(/\/$/, '');
       const storesRef = collection(db, 'store');
@@ -108,7 +109,18 @@ export const http = (
         if (req.method!.toLocaleUpperCase() !== 'GET') {
           req.body.storeData = storeData;
         }
+        passedWithReferer = true;
       }
+    }
+
+    if (!passedWithStoreHash && !passedWithReferer) {
+      res.status(400).json({
+        meta: {
+          status: 'error',
+          message: 'StoreHash or Referer not provided',
+        },
+      });
+      return;
     }
 
     await handler(req, res);
