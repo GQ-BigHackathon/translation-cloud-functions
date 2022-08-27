@@ -19,6 +19,10 @@
     {
       "source": "/store/preview",
       "destination": "/api/integrations/bigcommerce/storePreview"
+    },
+    {
+      "source": "/store/setup",
+      "destination": "/api/integrations/bigcommerce/storeSetup"
     }
   ]
 }
